@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CarePoint | Hospital Management System</title>
+  <!-- Connect the CSS file to style the dashboard -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Sidebar navigation -->
+  <aside class="sidebar">
+    <a class="brand" href="#"><span class="brand-icon">✚</span> CarePoint</a>
+    <p class="nav-label">MAIN MENU</p>
+    <nav>
+      <a class="nav-link active" href="#dashboard">▦ &nbsp; Dashboard</a>
+      <a class="nav-link" href="#patients">♙ &nbsp; Patients</a>
+      <a class="nav-link" href="#appointments">▣ &nbsp; Appointments</a>
+      <a class="nav-link" href="#doctors">⚕ &nbsp; Doctors</a>
+      <a class="nav-link" href="#departments">▤ &nbsp; Departments</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <p class="nav-label">SUPPORT</p>
+      <a class="nav-link" href="#help">? &nbsp; Help & Support</a>
+      <a class="nav-link" href="#settings">⚙ &nbsp; Settings</a>
+      <div class="profile"><div class="avatar">AD</div><div><strong>Admin User</strong><small>Administrator</small></div></div>
+    </div>
+  </aside>
+
+  <!-- Main dashboard content -->
+  <main class="main-content" id="dashboard">
+    <header class="topbar">
+      <div><p class="breadcrumb">Pages / Dashboard</p><h1>Hospital Dashboard</h1></div>
+      <div class="topbar-right"><span id="todayDate"></span><button class="notification" aria-label="Notifications">♧</button></div>
+    </header>
+
+    <!-- Quick hospital statistics -->
+    <section class="stats-grid">
+      <article class="stat-card"><div class="stat-icon blue">♙</div><p>Total Patients</p><h2 id="totalPatients">6</h2><small><b>+12%</b> from last month</small></article>
+      <article class="stat-card"><div class="stat-icon green">▣</div><p>Appointments Today</p><h2 id="totalAppointments">4</h2><small><b>+8%</b> from yesterday</small></article>
+      <article class="stat-card"><div class="stat-icon purple">⚕</div><p>Available Doctors</p><h2>12</h2><small>Across 5 departments</small></article>
+      <article class="stat-card"><div class="stat-icon orange">⌛</div><p>Waiting Patients</p><h2 id="waitingPatients">1</h2><small>Currently waiting</small></article>
+    </section>
+
+    <!-- Appointment table and status filter -->
+    <section class="panel" id="appointments">
+      <div class="panel-heading">
+        <div><h2>Recent Appointments</h2><p>Overview of scheduled patient visits</p></div>
+        <div class="actions">
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="All">All Status</option><option>Confirmed</option><option>Waiting</option><option>Completed</option>
+          </select>
+          <button class="primary-button" id="openModal">+ New Appointment</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Patient</th><th>Doctor</th><th>Department</th><th>Date & Time</th><th>Status</th></tr></thead>
+          <tbody id="appointmentRows"></tbody>
+        </table>
+      </div>
+      <p class="table-note" id="appointmentCount"></p>
+    </section>
+
+    <!-- Patient directory with live search -->
+    <section class="panel" id="patients">
+      <div class="panel-heading">
+        <div><h2>Patient Directory</h2><p>Search and view registered patients</p></div>
+        <input id="patientSearch" class="search" type="search" placeholder="Search patient..." aria-label="Search patients">
+      </div>
+      <div class="patient-grid" id="patientGrid"></div>
+    </section>
+
+    <!-- Doctor list and hospital departments -->
+    <section class="bottom-grid">
+      <section class="panel" id="doctors">
+        <div class="panel-heading"><div><h2>Our Doctors</h2><p>Medical team availability</p></div><a href="#doctors">View all</a></div>
+        <div class="doctor-list">
+          <div class="doctor-row"><div class="doctor-avatar">RS</div><div class="doctor-info"><strong>Dr. Riya Sharma</strong><small>Cardiology</small></div><span class="available">Available</span></div>
+          <div class="doctor-row"><div class="doctor-avatar">AM</div><div class="doctor-info"><strong>Dr. Arjun Mehta</strong><small>Neurology</small></div><span class="available">Available</span></div>
+          <div class="doctor-row"><div class="doctor-avatar">PK</div><div class="doctor-info"><strong>Dr. Priya Kapoor</strong><small>Orthopedics</small></div><span class="busy">Busy</span></div>
+        </div>
+      </section>
+      <section class="panel" id="departments">
+        <div class="panel-heading"><div><h2>Departments</h2><p>Hospital specialities</p></div></div>
+        <div class="department-grid">
+          <div class="department"><span>♡</span><strong>Cardiology</strong><small>4 Doctors</small></div>
+          <div class="department"><span>✚</span><strong>General</strong><small>3 Doctors</small></div>
+          <div class="department"><span>⌁</span><strong>Neurology</strong><small>2 Doctors</small></div>
+          <div class="department"><span>♧</span><strong>Orthopedics</strong><small>3 Doctors</small></div>
+        </div>
+      </section>
+    </section>
+    <footer>© 2026 CarePoint Hospital Management System · Demo interface</footer>
+  </main>
+
+  <!-- Modal form shown when the New Appointment button is clicked -->
+  <div class="modal hidden" id="appointmentModal">
+    <div class="modal-card">
+      <div class="modal-heading"><div><h2>New Appointment</h2><p>Enter the patient visit details</p></div><button id="closeModal" class="close-button" type="button">×</button></div>
+      <form id="appointmentForm">
+        <label>Patient name<input name="patient" required placeholder="Enter patient name"></label>
+        <label>Doctor<select name="doctor" required><option value="">Select doctor</option><option>Dr. Riya Sharma</option><option>Dr. Arjun Mehta</option><option>Dr. Priya Kapoor</option><option>Dr. Kabir Singh</option></select></label>
+        <label>Department<select name="department" required><option value="">Select department</option><option>Cardiology</option><option>Neurology</option><option>Orthopedics</option><option>General</option></select></label>
+        <div class="form-row"><label>Date<input name="date" id="appointmentDate" type="date" required></label><label>Time<input name="time" type="time" required></label></div>
+        <button class="primary-button submit-button" type="submit">Save Appointment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript adds the dashboard functionality -->
+  <script src="script.js"></script>
+</body>
+</html>
